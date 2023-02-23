@@ -1,3 +1,4 @@
+//검색 평균 데이터 필터
 function sumDataFunc(resData) {
   var st_serchDay; //데이터 검색일
   var st_priceAverageAllRegion; //전국 평균가격

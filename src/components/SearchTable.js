@@ -13,6 +13,8 @@ import { sumDataFunc } from "../script/sumDataFunc";
 
 export default function SearchTable() {
   const { DBdata } = useContext(DBdataContext);
+  const { searchData } = useContext(SearchDataContext);
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -30,8 +32,6 @@ export default function SearchTable() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  const { searchData } = useContext(SearchDataContext);
 
   return (
     <>

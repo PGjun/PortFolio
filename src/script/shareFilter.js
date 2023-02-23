@@ -1,7 +1,6 @@
-// import { dummydata } from "./dummydata.js";
-
+//나눔필터
 function shareFilter(resData) {
-  let shareData = new Array();
+  let shareData = [];
   for (const item of resData) {
     let price = item.Price;
     const indexNanum = price.indexOf("나눔");

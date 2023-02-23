@@ -31,8 +31,9 @@ import { LoadingContext } from "../contexts/LoadingContext"; //로딩 컨텍스�
 import SelectArea from "../components/SelectArea";
 
 //외부함수
-import { postSearchData } from "../api";
-// import { dummydata } from "../script/dummydata"; //더미데이터
+// api쓸 때
+// import { postSearchData } from "../api";
+import { dummydata } from "../script/dummydata"; //더미데이터
 //
 
 export default function Title() {
@@ -44,6 +45,30 @@ export default function Title() {
 
   //
   const navigate = useNavigate();
+
+  //#########더미데이터 쓸 때##########
+  const Filter = (city, area, value) => {
+    let filterdummy = [];
+    for (const item of dummydata) {
+      // console.log("city", city);
+      // console.log("area", area);
+
+      if (city !== "전국") {
+        if (item.Province === area && item.Region === city) {
+          console.log("테스트", item.Province, item.Region);
+          if (item.Title.includes(value)) {
+            filterdummy.push(item);
+          }
+        }
+      } else if (item.Title.includes(value)) {
+        // console.log("item.Title", item.Title);
+        filterdummy.push(item);
+      }
+    }
+    setDBdata(filterdummy);
+    setAllDBdata(filterdummy);
+  };
+  //#########더미데이터 쓸 때##########
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -63,26 +88,28 @@ export default function Title() {
     setSearchData((searchData) => ({
       ...props,
     }));
-    const response = postSearchData(props);
-    response.then((res) => {
-      if (res.isSuccess) {
-        if (e.target[0].value === "전국") {
-          setDBdata(res.result.total);
-        } else {
-          setDBdata(res.result.local);
-        }
-        setAllDBdata(res.result.total);
-        navigate("/statistics");
-      } else {
-        alert(`${res.message}`);
-      }
-      setLoading(false);
-    });
-    //더미데이터 쓸때
-    // setDBdata(dummydata);
-    // setAllDBdata(dummydata);
-    // navigate("/statistics");
-    //더미더미
+    // const response = postSearchData(props);
+    // response.then((res) => {
+    //   if (res.isSuccess) {
+    //     if (e.target[0].value === "전국") {
+    //       setDBdata(res.result.total);
+    //     } else {
+    //       setDBdata(res.result.local);
+    //     }
+    //     setAllDBdata(res.result.total);
+    //     navigate("/statistics");
+    //   } else {
+    //     alert(`${res.message}`);
+    //   }
+    //   setLoading(false);
+    // });
+
+    //#########더미데이터 쓸 때##########
+    Filter(city, area, value);
+    navigate("/statistics");
+    //#########더미데이터 쓸 때##########
+
+    setLoading(false);
   };
 
   const [sideBar, setSideBar] = useState(false);

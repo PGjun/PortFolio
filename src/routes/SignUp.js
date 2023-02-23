@@ -2,6 +2,10 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+//뒤로가기 버튼
+import IconButton from "@mui/material/IconButton";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 //스타일
 import { CenterDiv } from "../style/styled";
 
@@ -14,6 +18,7 @@ import {
   FormControlLabel,
   Checkbox,
   Divider,
+  Container,
 } from "@mui/material";
 
 //외부함수
@@ -91,115 +96,137 @@ export default function SignUp() {
       alert("인증번호가 일치하지 않습니다!");
     }
   };
+
+  const styles = {
+    container: {
+      backgroundColor: "white", // 배경색 지정
+      minHeight: "100vh", // 화면 전체 높이로 설정
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+  };
+
+  const handleBack = () => {
+    navigate(-1);
+  };
   return (
     <>
-      <CenterDiv
-        width="25%"
-        boxShadow="0px 0px 5px 1px #ccc"
-        borderRadius="2px"
-        backgroundColor="white"
-        padding="0rem 5rem 0rem 5rem"
-        textAlign="none"
-      >
-        <form onSubmit={onSubmit}>
-          <Typography
-            sx={{
-              fontSize: "30px",
-              color: "coral",
-              m: 2,
-              pt: 5,
-              textAlign: "center",
-              fontWeight: "bold",
-            }}
-          >
-            회원가입
-          </Typography>
-          <Divider sx={{ margin: "2rem 0rem 3rem 0rem" }} />
-          <Typography component="h1" varient="h5" style={{ color: "black" }}>
-            이메일
-          </Typography>
+      <Container maxWidth="xl" sx={styles.container}>
+        <CenterDiv
+          width="25%"
+          borderRadius="2px"
+          backgroundColor="white"
+          padding="0rem 5rem 0rem 5rem"
+          textAlign="none"
+        >
+          <div style={{ position: "absolute", top: "3.5rem", left: "5rem" }}>
+            <IconButton onClick={handleBack}>
+              <ArrowBackIcon />
+            </IconButton>
+          </div>
+          <form onSubmit={onSubmit}>
+            <Typography
+              sx={{
+                fontSize: "30px",
+                color: "coral",
+                m: 2,
+                pt: 5,
+                textAlign: "center",
+                fontWeight: "bold",
+              }}
+            >
+              회원가입
+            </Typography>
+            <Divider sx={{ margin: "2rem 0rem 3rem 0rem" }} />
+            <Typography component="h1" varient="h5" style={{ color: "black" }}>
+              이메일
+            </Typography>
 
-          <TextField
-            color="warning"
-            sx={{ mt: 1, mb: 2 }}
-            label="email"
-            required
-            fullWidth
-            name="email"
-            autoComplete="email"
-            autoFocus
-            id="email"
-          />
-          <Grid container>
-            <Grid item xs={8}>
-              <Typography
-                component="h1"
-                varient="h5"
-                style={{ color: "black" }}
-              >
-                인증번호
-              </Typography>
-              <TextField
-                color="warning"
-                sx={{ mt: 1, mb: 2 }}
-                label="Certification Number"
-                required
-                fullWidth
-                name="Certification Number"
-                autoComplete="Certification Number"
-                id="number"
-              />
+            <TextField
+              color="warning"
+              sx={{ mt: 1, mb: 2 }}
+              label="email"
+              required
+              fullWidth
+              name="email"
+              autoComplete="email"
+              autoFocus
+              id="email"
+            />
+            <Grid container>
+              <Grid item xs={8}>
+                <Typography
+                  component="h1"
+                  varient="h5"
+                  style={{ color: "black" }}
+                >
+                  인증번호
+                </Typography>
+                <TextField
+                  color="warning"
+                  sx={{ mt: 1, mb: 2 }}
+                  label="Certification Number"
+                  required
+                  fullWidth
+                  name="Certification Number"
+                  autoComplete="Certification Number"
+                  id="number"
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Button sx={{ mt: 5, ml: 1 }} onClick={SendEmail}>
+                  인증번호 발송
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={4}>
-              <Button sx={{ mt: 5, ml: 1 }} onClick={SendEmail}>
-                인증번호 발송
-              </Button>
-            </Grid>
-          </Grid>
 
-          <Typography component="h1" varient="h5" style={{ color: "black" }}>
-            비밀번호
-          </Typography>
-          <TextField
-            color="warning"
-            sx={{ mt: 1, mb: 2 }}
-            label="password"
-            type="password"
-            fullWidth
-            name="password"
-            autoComplete="current-password"
-            required
-            id="password"
-          />
-          <Typography component="h1" varient="h5" style={{ color: "black" }}>
-            비밀번호 재확인
-          </Typography>
-          <TextField
-            color="warning"
-            sx={{ mt: 1, mb: 2 }}
-            label="confirm password"
-            type="password"
-            fullWidth
-            name="confirmPassword"
-            autoComplete="current-password"
-            required
-            id="confirmPassword"
-          />
-          <FormControlLabel
-            control={<Checkbox required />}
-            label="E-Mail 수신에 동의합니다"
-          />
-          <Button
-            color="warning"
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 7, background: "coral" }}
-          >
-            가입하기
-          </Button>
-        </form>
-      </CenterDiv>
+            <Typography component="h1" varient="h5" style={{ color: "black" }}>
+              비밀번호
+            </Typography>
+            <TextField
+              color="warning"
+              sx={{ mt: 1, mb: 2 }}
+              label="password"
+              type="password"
+              fullWidth
+              name="password"
+              autoComplete="current-password"
+              required
+              id="password"
+            />
+            <Typography component="h1" varient="h5" style={{ color: "black" }}>
+              비밀번호 재확인
+            </Typography>
+            <TextField
+              color="warning"
+              sx={{ mt: 1, mb: 2 }}
+              label="confirm password"
+              type="password"
+              fullWidth
+              name="confirmPassword"
+              autoComplete="current-password"
+              required
+              id="confirmPassword"
+            />
+            <FormControlLabel
+              control={<Checkbox required />}
+              label="E-Mail 수신에 동의합니다"
+            />
+
+            <Button
+              color="warning"
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 7, background: "coral" }}
+            >
+              가입하기
+            </Button>
+          </form>
+        </CenterDiv>
+      </Container>
     </>
   );
 }

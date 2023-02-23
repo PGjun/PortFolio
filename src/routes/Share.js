@@ -41,7 +41,7 @@ export default function Share() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const dataCell = shareFilter(DBdata); // 더미 or DBdata
+  const dataCell = shareFilter(DBdata);
 
   //함수
   const handleChangePage = (event, newPage) => {

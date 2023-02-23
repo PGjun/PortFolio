@@ -1,5 +1,5 @@
 //리액트
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 
 //스타일
@@ -38,10 +38,17 @@ import { LoadingContext } from "../contexts/LoadingContext"; //로딩 컨텍스�
 import SelectArea from "../components/SelectArea";
 
 //외부함수
-import { getLoginStatus, getLogOut, postSearchData } from "../api";
+import { getLoginStatus, getLogOut } from "../api";
+//api 쓸 때
+// import { postSearchData } from "../api";
+
+//더미데이터 쓸 때
 import { dummydata } from "../script/dummydata"; //더미데이터
 
 export default function Header() {
+  //로케이션
+  const location = useLocation();
+
   //컨택스트
   const { setSearchData } = useContext(SearchDataContext);
   const { setDBdata } = useContext(DBdataContext);
@@ -54,7 +61,9 @@ export default function Header() {
     TrueFalse: false,
     profileImage: "",
   });
-  const navigate = useNavigate();
+
+  // api 쓸 때
+  // const navigate = useNavigate();
 
   //함수
   useEffect(() => {
@@ -74,6 +83,30 @@ export default function Header() {
     test();
   }, []);
 
+  //#########더미데이터 쓸 때##########
+  const Filter = (city, area, value) => {
+    let filterdummy = [];
+    for (const item of dummydata) {
+      // console.log("city", city);
+      // console.log("area", area);
+
+      if (city !== "전국") {
+        if (item.Province === area && item.Region === city) {
+          console.log("테스트", item.Province, item.Region);
+          if (item.Title.includes(value)) {
+            filterdummy.push(item);
+          }
+        }
+      } else if (item.Title.includes(value)) {
+        // console.log("item.Title", item.Title);
+        filterdummy.push(item);
+      }
+    }
+    setDBdata(filterdummy);
+    setAllDBdata(filterdummy);
+  };
+  //#########더미데이터 쓸 때##########
+
   const onSubmit = (e) => {
     e.preventDefault();
     setLoading(true); //로딩
@@ -90,27 +123,31 @@ export default function Header() {
     setSearchData((searchData) => ({
       ...props,
     }));
-    const response = postSearchData(props);
-    response.then((res) => {
-      if (res.isSuccess) {
-        if (e.target[0].value === "전국") {
-          setDBdata(res.result.total);
-        } else {
-          setDBdata(res.result.local);
-        }
-        setAllDBdata(res.result.total);
-        navigate("/statistics");
-      } else {
-        alert(`${res.message}`);
-      }
-    });
-    //더미데이터 쓸때
-    setDBdata(dummydata);
-    setAllDBdata(dummydata);
-    navigate("/statistics");
+    // api쓸때
+    // const response = postSearchData(props);
+    // response.then((res) => {
+    //   if (res.isSuccess) {
+    //     if (e.target[0].value === "전국") {
+    //       setDBdata(res.result.total);
+    //     } else {
+    //       setDBdata(res.result.local);
+    //     }
+    //     setAllDBdata(res.result.total);
+    //     navigate("/statistics");
+    //   } else {
+    //     alert(`${res.message}`);
+    //   }
+    // });
+    // api쓸때
+
+    //#########더미데이터 쓸 때##########
+    Filter(city, area, value);
+    //#########더미데이터 쓸 때##########
+
+    // navigate("/statistics");
     setLoading(false);
-    //더미더미
   };
+
   const LogOut = () => {
     const data = "/auth/logout";
     const props = { path: data };
@@ -244,7 +281,7 @@ export default function Header() {
                       to="/statistics"
                       style={{ textDecorationLine: "none" }}
                     >
-                      {window.location.pathname === "/statistics" ? (
+                      {location.pathname === "/statistics" ? (
                         <Button
                           sx={{
                             ml: 2,
@@ -273,7 +310,8 @@ export default function Header() {
                       )}
                     </Link>
                     <Link to="/search" style={{ textDecorationLine: "none" }}>
-                      {window.location.pathname === "/search" ? (
+                      {}
+                      {location.pathname === "/search" ? (
                         <Button
                           sx={{
                             ml: 2,
@@ -303,7 +341,7 @@ export default function Header() {
                     </Link>
 
                     <Link to="/share" style={{ textDecorationLine: "none" }}>
-                      {window.location.pathname === "/share" ? (
+                      {location.pathname === "/share" ? (
                         <Button
                           sx={{
                             ml: 2,
@@ -333,7 +371,7 @@ export default function Header() {
                     </Link>
 
                     <Link to="/trace" style={{ textDecorationLine: "none" }}>
-                      {window.location.pathname === "/trace" ? (
+                      {location.pathname === "/trace" ? (
                         <Button
                           sx={{
                             ml: 2,
@@ -362,7 +400,7 @@ export default function Header() {
                       )}
                     </Link>
                     <Link to="/main" style={{ textDecorationLine: "none" }}>
-                      {window.location.pathname === "/main" ? (
+                      {location.pathname === "/main" ? (
                         <Button
                           sx={{
                             ml: 2,

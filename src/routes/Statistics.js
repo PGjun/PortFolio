@@ -50,7 +50,9 @@ const TitleTextStyle = styled.div`
 export default function Statistics() {
   const { searchData } = useContext(SearchDataContext);
   const { DBdata } = useContext(DBdataContext);
-  const sumData = sumDataFunc(DBdata);
+
+  // const sumData = sumDataFunc(DBdata);// 원래코드
+  const sumData = sumDataFunc(DBdata, searchData.userValue); //더미데이터로 수정한 코드,두번째 인자는 검색어
 
   return (
     <>
